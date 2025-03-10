@@ -30,14 +30,12 @@ class PerceptronModel(Module):
         Parameter(weight_vector)
 
         where weight_vector is a pytorch Tensor of dimension 'dimensions'
-
         
         Hint: You can use ones(dim) to create a tensor of dimension dim.
         """
         super(PerceptronModel, self).__init__()
-        
-        "*** YOUR CODE HERE ***"
-        
+        weight_vector = torch.ones(1, dimensions, dtype=torch.float32) 
+        self.w = Parameter(weight_vector, requires_grad=False) 
 
     def get_weights(self):
         """
@@ -55,7 +53,7 @@ class PerceptronModel(Module):
 
         The pytorch function `tensordot` may be helpful here.
         """
-        "*** YOUR CODE HERE ***"
+        return torch.matmul(self.w, x.T)
         
 
     def get_prediction(self, x):
@@ -64,19 +62,24 @@ class PerceptronModel(Module):
 
         Returns: 1 or -1
         """
-        "*** YOUR CODE HERE ***"
+        return 1 if self.run(x) >= 0 else -1
 
 
 
     def train(self, dataset):
-        """
-        Train the perceptron until convergence.
-        You can iterate through DataLoader in order to 
-        retrieve all the batches you need to train on.
+        with torch.no_grad():  # No usamos autograd, actualizamos los pesos manualmente
+            dataloader = DataLoader(dataset, batch_size=1, shuffle=True)  
+        
+            converged = False  
+            while not converged:  
+                converged = True  # Suponemos que convergerá
+            
+                for data in dataloader:  
+                    x, y = data['x'], data['label'].item()  # Obtenemos x y etiqueta
+                
+                    prediction = self.get_prediction(x)
+                    if prediction != y:  # Si está mal clasificado
+                        self.w += y * x.squeeze(0)  # Actualizamos pesos
+                        converged = False  # Si hubo una actualización, no ha convergido
 
-        Each sample in the dataloader is in the form {'x': features, 'label': label} where label
-        is the item we need to predict based off of its features.
-        """        
-        with no_grad():
-            dataloader = DataLoader(dataset, batch_size=1, shuffle=True)
-            "*** YOUR CODE HERE ***"
+
