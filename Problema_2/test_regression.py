@@ -14,6 +14,10 @@ def test_regression_model():
     # Convertir a tensores de PyTorch
     x_tensor = torch.FloatTensor(x_values).reshape(-1, 1)
     y_tensor = torch.FloatTensor(y_values).reshape(-1, 1)
+    # Guardar los datos en un archivo de CSV 
+    np.savetxt('./Problema_2/datos_seno.csv', np.column_stack((x_values, y_values)), 
+              delimiter=',', header='x,sin(x)', comments='')
+    print("Datos guardados también en formato CSV como 'datos_seno.csv'")
     
     # Crear un dataset de PyTorch
     dataset = torch.utils.data.TensorDataset(x_tensor, y_tensor)
@@ -24,12 +28,11 @@ def test_regression_model():
     
     # Entrenar el modelo (con un learning_rate un poco más bajo para mayor estabilidad)
     print("Entrenando el modelo...")
-    model.train(dataset, learning_rate=0.005, batch_size=64, num_epochs=3000, target_loss=0.02)
+    model.train_model(dataset, learning_rate=0.005, batch_size=64, num_epochs=3000, target_loss=0.02)
     
     # Evaluar el modelo
     print("Evaluando el modelo...")
-    model.eval() 
-     # Cambiar a modo de evaluación
+    model.eval()  # Cambiar a modo de evaluación
     with torch.no_grad():
         predictions = model(x_tensor)
     
@@ -53,7 +56,7 @@ def test_regression_model():
     plt.xlabel('x')
     plt.ylabel('sin(x)')
     plt.grid(True)
-    plt.savefig('regresion_resultado.png')
+    plt.savefig('./Problema_2/regresion_resultado.png')
     print("Gráfico guardado como 'regresion_resultado.png'")
     
     # Si matplotlib puede mostrar el gráfico, mostrarlo
