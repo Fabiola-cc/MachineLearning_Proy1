@@ -74,7 +74,14 @@ class RegressionModel(nn.Module):
         loss_fn = nn.MSELoss()
         return loss_fn(predictions, y)
 
-    def train(self, dataset, learning_rate=0.01, batch_size=32, num_epochs=2000, target_loss=0.02):
+    def train(self, mode=True):
+        """
+        Sobreescribe el método train original de nn.Module para mantener compatibilidad
+        """
+        # Llama al método train original de nn.Module
+        return super(RegressionModel, self).train(mode)
+        
+    def train_model(self, dataset, learning_rate=0.01, batch_size=32, num_epochs=2000, target_loss=0.02):
         """
         Entrena el modelo usando actualizaciones basadas en gradientes.
         
@@ -85,6 +92,9 @@ class RegressionModel(nn.Module):
             num_epochs: Número máximo de épocas para entrenar
             target_loss: Pérdida objetivo para detener el entrenamiento
         """
+        # Asegurar que el modelo esté en modo de entrenamiento
+        self.train(True)
+        
         # Crear el optimizador Adam
         optimizer = optim.Adam(self.parameters(), lr=learning_rate)
         
