@@ -15,7 +15,7 @@ def test_regression_model():
     x_tensor = torch.FloatTensor(x_values).reshape(-1, 1)
     y_tensor = torch.FloatTensor(y_values).reshape(-1, 1)
     # Guardar los datos en un archivo de CSV 
-    np.savetxt('./Problema_2/datos_seno.csv', np.column_stack((x_values, y_values)), 
+    np.savetxt('./Problema_2/Imagenes/datos_seno.csv', np.column_stack((x_values, y_values)), 
               delimiter=',', header='x,sin(x)', comments='')
     print("Datos guardados también en formato CSV como 'datos_seno.csv'")
     
@@ -56,7 +56,7 @@ def test_regression_model():
     plt.xlabel('x')
     plt.ylabel('sin(x)')
     plt.grid(True)
-    plt.savefig('./Problema_2/regresion_resultado.png')
+    plt.savefig('./Problema_2/Imagenes/regresion_resultado.png')
     print("Gráfico guardado como 'regresion_resultado.png'")
     
     # Si matplotlib puede mostrar el gráfico, mostrarlo

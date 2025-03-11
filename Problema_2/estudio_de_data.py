@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Cargar el archivo CSV
-datos = pd.read_csv('Problema_2\datos_seno.csv')
+datos = pd.read_csv('Problema_2\Imagenes\datos_seno.csv')
 
 # Crear rangos desde -6 hasta 6
 rangos = list(range(-6, 7))
@@ -39,7 +39,7 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 
 # Guardar la gráfica
-plt.savefig('./Problema_2/distribucion_datos_seno.png')
+plt.savefig('./Problema_2/Imagenes/distribucion_datos_seno.png')
 print("="*50)
 print("Gráfico guardado como 'distribucion_datos_seno.png'")
 
